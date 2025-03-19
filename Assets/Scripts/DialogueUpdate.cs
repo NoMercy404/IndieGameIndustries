@@ -33,7 +33,7 @@ public class DialogueUpdate : MonoBehaviour
                 dialogueBoxes[index].SetActive(true);
 
                 if (index == dialogueBoxes.Count - 1) {
-                    HidePlaceholder1(dialogueBoxes[index]);
+                    ShopInterface(dialogueBoxes[index]);
                 }
             }
             else {
@@ -46,11 +46,13 @@ public class DialogueUpdate : MonoBehaviour
         }
     }
 
-    // funkcja do chowania placeholder1
-    private void HidePlaceholder1(GameObject dialogueBox) {
+    //funkcja do wyswietlania sklepu
+    private void ShopInterface(GameObject dialogueBox) {
         Transform placeholder1 = dialogueBox.transform.Find("Placeholder1");
-        if (placeholder1 != null) {
-            placeholder1.gameObject.SetActive(false);
+        Transform shop = dialogueBox.transform.Find("Shop");
+        if (shop != null && placeholder1 != null) {
+            placeholder1.gameObject.SetActive(false); //chowamy tekst ze spacja
+            shop.gameObject.SetActive(true); //wyswietlamy sklep
         }
     }
 }
