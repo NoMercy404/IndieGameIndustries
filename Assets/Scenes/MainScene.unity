@@ -5230,7 +5230,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 16
+  m_Text: 10
 --- !u!222 &286115293
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5486,7 +5486,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b88235c35f0b6de4bbb04268c3f85e36, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6ff6cf3993e09e9488f292a02338cdcc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5820,7 +5820,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ulepszenie broni
+  m_Text: "Ulepszenie \u0142uku"
 --- !u!222 &686273891
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5978,7 +5978,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ulepszenie broni
+  m_Text: "Zwi\u0119kszenie pocisk\xF3w"
 --- !u!222 &726411380
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6044,7 +6044,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b88235c35f0b6de4bbb04268c3f85e36, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f75d0cc0b6b0154bb52b8fa60f25e05, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6132,7 +6132,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ulepszenie broni
+  m_Text: "Ulepszenie broni bia\u0142ej"
 --- !u!222 &749937496
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6479,7 +6479,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ulepszenie broni
+  m_Text: "Mikstura \u017Cycia"
 --- !u!222 &893186726
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6735,7 +6735,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ulepszenie broni
+  m_Text: "\u0141a\u0144cuch b\u0142skawic"
 --- !u!222 &1071181625
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7105,7 +7105,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b88235c35f0b6de4bbb04268c3f85e36, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e1b75dba0b2a83d4b89e0bf846f3d3c6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7576,7 +7576,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 16
+  m_Text: 3
 --- !u!222 &1456881935
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7975,7 +7975,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b88235c35f0b6de4bbb04268c3f85e36, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9ca7ba7ce2c80024aaab18c112f5ae46, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8132,7 +8132,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 16
+  m_Text: 48
 --- !u!222 &2016920467
 CanvasRenderer:
   m_ObjectHideFlags: 0
