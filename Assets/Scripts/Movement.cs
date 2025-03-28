@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     private bool isMoving;
     public LayerMask solidObjectsLayer;
     
+    public Transform weaponHolder;
+
 
     private Vector2 input;
     
