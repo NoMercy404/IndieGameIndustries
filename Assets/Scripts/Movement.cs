@@ -10,18 +10,20 @@ public class PlayerController : MonoBehaviour
     public LayerMask solidObjectsLayer;
     
     public Transform weaponHolder;
-
+    private SpriteRenderer spriteRenderer;
 
     private Vector2 input;
-    
+
     private void Awake()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Pobranie komponentu SpriteRenderer
     }
+
     private void Update()
     {
         HandleUpdate();
     }
+
     public static class GameData
     {
         public static Vector3 PlayerPosition;
@@ -34,11 +36,14 @@ public class PlayerController : MonoBehaviour
             input.x = Input.GetAxisRaw("Horizontal");
             input.y = Input.GetAxisRaw("Vertical");
 
-
-
             if (input != Vector2.zero)
             {
-                
+                // Sprawdzamy kierunek i zmieniamy flipX
+                if (input.x > 0)
+                    spriteRenderer.flipX = false; // Patrzy w prawo
+                else if (input.x < 0)
+                    spriteRenderer.flipX = true; // Patrzy w lewo
+
                 var targetPos = transform.position;
                 targetPos.x += input.x;
                 targetPos.y += input.y;
@@ -47,11 +52,10 @@ public class PlayerController : MonoBehaviour
                     StartCoroutine(Move(targetPos));
             }
         }
-        
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            Debug.Log("Pozycja gracza: "+transform.position);
+            Debug.Log("Pozycja gracza: " + transform.position);
         }
     }
 
@@ -65,19 +69,16 @@ public class PlayerController : MonoBehaviour
         }
         transform.position = targetPos;
 
-
         isMoving = false;
 
         CheckForEncounters();
     }
+
     private bool isWalkable(Vector3 targetPos)
     {
-        if (Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer) != null)
-            return false;
-        else return true;
+        return Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer) == null;
     }
 
-   
     private void CheckForEncounters()
     {
         if (Physics2D.OverlapCircle(transform.position, 0.1f, solidObjectsLayer) != null)
@@ -89,3 +90,5 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
+
+
