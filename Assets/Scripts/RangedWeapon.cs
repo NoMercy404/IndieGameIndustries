@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 public class RangedWeapon : Weapon
 {
     public RangedWeapon(int damage_min, int damage_max, int range) : base(damage_min, damage_max, range)
