@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isMoving;
     public LayerMask solidObjectsLayer;
+    public LayerMask solidObjectsInvisibleLayer;
     
     public Transform weaponHolder;
     private SpriteRenderer spriteRenderer;
@@ -76,12 +77,23 @@ public class PlayerController : MonoBehaviour
 
     private bool isWalkable(Vector3 targetPos)
     {
-        return Physics2D.OverlapCircle(targetPos, 0.3f, solidObjectsLayer) == null;
+        Vector2 origin = transform.position;
+        Vector2 direction = (targetPos - transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, targetPos);
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, distance, solidObjectsLayer);
+        if (hit.collider != null)
+        {
+            Debug.Log("Kolizja z: " + hit.collider.name + " na pozycji: " + hit.point);
+        }
+        return hit.collider == null;
     }
+
+
 
     private void CheckForEncounters()
     {
-        if (Physics2D.OverlapCircle(transform.position, 0.1f, solidObjectsLayer) != null)
+        if (Physics2D.OverlapCircle(transform.position, 0.3f, solidObjectsLayer) != null)
         {
             if (Random.Range(1, 100) <= 25)
             {
