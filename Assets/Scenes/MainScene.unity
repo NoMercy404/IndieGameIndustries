@@ -13194,6 +13194,7 @@ GameObject:
   - component: {fileID: 1593997626}
   - component: {fileID: 1593997625}
   - component: {fileID: 1593997627}
+  - component: {fileID: 1593997628}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -13374,6 +13375,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae776ae4193df4752a99061629e11f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1593997628
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593997620}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bf7a47e49f5444648b4efeec7bcc208, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1635451953
 GameObject:
   m_ObjectHideFlags: 0
@@ -14226,12 +14248,12 @@ PrefabInstance:
     - target: {fileID: 7641561817032470986, guid: 1679f890443e54595a2027ffbf20e221,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.97
+      value: 5.17
       objectReference: {fileID: 0}
     - target: {fileID: 7641561817032470986, guid: 1679f890443e54595a2027ffbf20e221,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.97
+      value: -2.27
       objectReference: {fileID: 0}
     - target: {fileID: 7641561817032470986, guid: 1679f890443e54595a2027ffbf20e221,
         type: 3}
