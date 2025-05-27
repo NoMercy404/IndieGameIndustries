@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
 
 public class Enemy : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     private float currentHP;
 
     public Slider HP;  // Referencja do paska HP
-    public TextMeshProUGUI EnemyTag;  // Referencja do tekstu
+    public Text EnemyTag;  // Referencja do tekstu
 
     private void Start()
     {
