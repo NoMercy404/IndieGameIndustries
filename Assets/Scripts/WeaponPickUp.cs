@@ -29,28 +29,29 @@ public class WeaponPickup : MonoBehaviour
     }
 
     void PickUpWeapon()
+{
+    GameObject player = GameObject.FindGameObjectWithTag("Player");
+    Transform weaponHolder = player.transform.Find("WeaponHolder");
+
+    if (weaponHolder == null)
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        Transform weaponHolder = player.transform.Find("WeaponHolder");
-
-        // Jeśli gracz ma już broń — usuń starą broń
-        if (weaponHolder.childCount > 0) 
-        {
-            foreach (Transform child in weaponHolder)
-            {
-                Destroy(child.gameObject);
-            }
-        }
-
-        // PRZENIESIENIE broni do ręki gracza zamiast tworzenia nowej
-        transform.SetParent(weaponHolder);
-        transform.localPosition = Vector3.zero; // Ustawienie broni w centrum WeaponHoldera
-
-        // WYŁĄCZENIE kolizji i fizyki po podniesieniu
-        if (GetComponent<Rigidbody2D>())
-            GetComponent<Rigidbody2D>().simulated = false;
-
-        if (GetComponent<Collider2D>())
-            GetComponent<Collider2D>().enabled = false;
+        Debug.LogError("Nie znaleziono WeaponHolder!");
+        return;
     }
+
+    // Usuń starą broń
+    foreach (Transform child in weaponHolder)
+    {
+        Destroy(child.gameObject);
+    }
+
+    // Resetuj skalę i rotację broni
+    transform.SetParent(weaponHolder);
+    transform.localPosition = Vector3.zero;
+    transform.localRotation = Quaternion.Euler(0f, 0f, 90f); // Dopasuj do ręki
+    transform.localScale = Vector3.one;
+
+    Debug.Log("Broń podniesiona!");
+}
+
 }

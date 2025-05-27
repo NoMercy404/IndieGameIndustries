@@ -12,12 +12,14 @@ public class PlayerController : MonoBehaviour
 
     public Transform weaponHolder;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     private Vector2 input;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>(); // Pobranie komponentu SpriteRenderer
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -25,33 +27,36 @@ public class PlayerController : MonoBehaviour
         HandleUpdate();
     }
 
-    public static class GameData
-    {
-        public static Vector3 PlayerPosition;
-    }
-
     public void HandleUpdate()
     {
-        if (!isMoving)
+        input.x = Input.GetAxisRaw("Horizontal");
+        input.y = Input.GetAxisRaw("Vertical");
+
+        animator.SetBool("isRunning", input != Vector2.zero);
+
+        if (input.x > 0)
         {
-            input.x = Input.GetAxisRaw("Horizontal");
-            input.y = Input.GetAxisRaw("Vertical");
+            spriteRenderer.flipX = false;
 
-            if (input != Vector2.zero)
-            {
-                // Sprawdzamy kierunek i zmieniamy flipX
-                if (input.x > 0)
-                    spriteRenderer.flipX = false; // Patrzy w prawo
-                else if (input.x < 0)
-                    spriteRenderer.flipX = true; // Patrzy w lewo
+            if (weaponHolder != null)
+                weaponHolder.localRotation = Quaternion.Euler(0f, 0f, -50f); // obrót broni w prawo
+        }
+        else if (input.x < 0)
+        {
+            spriteRenderer.flipX = true;
 
-                var targetPos = transform.position;
-                targetPos.x += input.x;
-                targetPos.y += input.y;
+            if (weaponHolder != null)
+                weaponHolder.localRotation = Quaternion.Euler(0f, 0f, 50f); // obrót broni w lewo
+        }
 
-                if (isWalkable(targetPos))
-                    StartCoroutine(Move(targetPos));
-            }
+        if (!isMoving && input != Vector2.zero)
+        {
+            Vector3 targetPos = transform.position;
+            targetPos.x += input.x;
+            targetPos.y += input.y;
+
+            if (isWalkable(targetPos))
+                StartCoroutine(Move(targetPos));
         }
 
         if (Input.GetKeyDown(KeyCode.Z))
@@ -69,7 +74,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         transform.position = targetPos;
-        Animation.FindAnyObjectByType<Animator>().SetTrigger("isRunning");
+        animator.SetTrigger("isRunning");
         isMoving = false;
 
         CheckForEncounters();
@@ -89,8 +94,6 @@ public class PlayerController : MonoBehaviour
         return hit.collider == null;
     }
 
-
-
     private void CheckForEncounters()
     {
         if (Physics2D.OverlapCircle(transform.position, 0.3f, solidObjectsLayer) != null)
@@ -102,4 +105,3 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
-
