@@ -1,9 +1,12 @@
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
     public float maxHP = 100f;
+
+  public static int counterKills = 0; // <--- DODAJ TO
     private float currentHP;
 
     public Slider HP;  // Referencja do paska HP
@@ -11,25 +14,26 @@ public class Enemy : MonoBehaviour
 
     // Damage settings
     public float attackDamage = 10f;
-    public float attackRange = 1f;  // Odleg³oœæ 1 kratki
-    public float attackCooldown = 1f;  // Czas miêdzy atakami
+    public float attackRange = 1f;  // Odlegï¿½oï¿½ï¿½ 1 kratki
+    public float attackCooldown = 1f;  // Czas miï¿½dzy atakami
     private float lastAttackTime;
 
     // Reference to player
     private Transform player;
     private PlayerStats playerStats;
+  
 
     private void Start()
     {
         currentHP = maxHP;
 
-        // Ustawienie domyœlnego imienia przeciwnika
+        // Ustawienie domyï¿½lnego imienia przeciwnika
         if (EnemyTag != null)
         {
-            EnemyTag.text = "Wojownik"; // Mo¿esz zmieniæ na inne imiê
+            EnemyTag.text = "Wojownik"; // Moï¿½esz zmieniï¿½ na inne imiï¿½
         }
 
-        // Ustawienie pocz¹tkowego HP
+        // Ustawienie poczï¿½tkowego HP
         if (HP != null)
         {
             HP.maxValue = maxHP;
@@ -78,7 +82,7 @@ public class Enemy : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         currentHP -= damage;
-        currentHP = Mathf.Clamp(currentHP, 0, maxHP); // Zapobiega wartoœciom ujemnym
+        currentHP = Mathf.Clamp(currentHP, 0, maxHP); // Zapobiega wartoï¿½ciom ujemnym
 
         if (HP != null)
         {
@@ -88,12 +92,13 @@ public class Enemy : MonoBehaviour
         if (currentHP <= 0)
         {
             Die();
+            counterKills++; // Zwieksz licznik zabitych przeciwnikÃ³w
         }
     }
 
     private void Die()
     {
-        Destroy(gameObject); // Usuwa przeciwnika po œmierci
+        Destroy(gameObject); // Usuwa przeciwnika po ï¿½mierci
     }
 
     private void AttackPlayer()
