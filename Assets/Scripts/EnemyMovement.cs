@@ -16,6 +16,10 @@ public class EnemyMovement : MonoBehaviour
     public float pathUpdateInterval = 0.5f;
     public int maxPathfindingAttempts = 8;
 
+    // Attack settings - these will be used if there's no Enemy component
+    public float attackRange = 1f;
+    private Enemy enemyComponent;
+
     // Flag to prevent multiple collisions in a short time
     private bool canCollide = true;
     private float collisionCooldown = 0.5f;
@@ -62,6 +66,14 @@ public class EnemyMovement : MonoBehaviour
         // Initialize pathfinding
         currentPathDirection = Vector2.zero;
         pathTimer = 0;
+
+        // Get reference to Enemy component if it exists
+        enemyComponent = GetComponent<Enemy>();
+        if (enemyComponent != null)
+        {
+            // Use the attack range from Enemy component
+            attackRange = enemyComponent.attackRange;
+        }
     }
 
     void FixedUpdate() // Using FixedUpdate for physics
@@ -71,32 +83,44 @@ public class EnemyMovement : MonoBehaviour
             // Calculate direct direction to the player
             Vector2 directDirection = ((Vector2)player.position - rb.position).normalized;
 
-            // Update path direction periodically or when blocked
-            pathTimer -= Time.fixedDeltaTime;
-            if (pathTimer <= 0 || isPathBlocked)
-            {
-                UpdatePathDirection(directDirection);
-                pathTimer = pathUpdateInterval;
-            }
+            // Calculate distance to player
+            float distanceToPlayer = Vector2.Distance(rb.position, player.position);
 
-            // Apply the velocity based on current path direction
-            if (currentPathDirection != Vector2.zero)
+            // If we're within attack range, stop moving
+            if (distanceToPlayer <= attackRange)
             {
-                rb.velocity = currentPathDirection * moveSpeed;
+                rb.velocity = Vector2.zero;
 
-                // Debug visualization
-                Debug.DrawRay(transform.position, currentPathDirection * obstacleDetectionDistance,
-                    isPathBlocked ? Color.red : Color.green);
+                // The actual attack is handled by the Enemy component
+                // This just ensures we stop moving when in attack range
             }
             else
             {
-                // If no valid path, stop moving
-                rb.velocity = Vector2.zero;
+                // Update path direction periodically or when blocked
+                pathTimer -= Time.fixedDeltaTime;
+                if (pathTimer <= 0 || isPathBlocked)
+                {
+                    UpdatePathDirection(directDirection);
+                    pathTimer = pathUpdateInterval;
+                }
+
+                // Apply the velocity based on current path direction
+                if (currentPathDirection != Vector2.zero)
+                {
+                    rb.velocity = currentPathDirection * moveSpeed;
+
+                    // Debug visualization
+                    Debug.DrawRay(transform.position, currentPathDirection * obstacleDetectionDistance,
+                        isPathBlocked ? Color.red : Color.green);
+                }
+                else
+                {
+                    // If no valid path, stop moving
+                    rb.velocity = Vector2.zero;
+                }
             }
 
-            // Always make the enemy face the player regardless of movement direction
-            float angle = Mathf.Atan2(directDirection.y, directDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            // Removed rotation code to keep the enemy sprite facing its original direction
         }
         else
         {
@@ -353,5 +377,9 @@ public class EnemyMovement : MonoBehaviour
             Gizmos.color = isPathBlocked ? Color.red : Color.green;
             Gizmos.DrawRay(transform.position, currentPathDirection * obstacleDetectionDistance);
         }
+
+        // Draw attack range
+        Gizmos.color = new Color(1, 0, 0, 0.2f); // Semi-transparent red
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

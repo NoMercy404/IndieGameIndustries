@@ -7,7 +7,7 @@ public class MeleeAttack : MonoBehaviour
     private bool isAttacking = false;
     public float attackDuration = 0.2f; // krótszy czas
     private Collider2D currentTarget; // ostatni wróg, z którym się stykamy
-
+    private PlayerStats playerStats;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q) && !isAttacking)
@@ -61,10 +61,16 @@ public class MeleeAttack : MonoBehaviour
 
     private void ApplyDamageTo(Collider2D target)
     {
+        // Check if PlayerStats exists and update damage value
+        if (playerStats != null)
+        {
+            damage = playerStats.meleeDamage;
+        }
+
         Enemy enemy = target.GetComponentInParent<Enemy>();
         if (enemy != null)
         {
-            Debug.Log("Enemy detected: " + enemy.name);
+            Debug.Log("Enemy detected: " + enemy.name + ", applying damage: " + damage);
             enemy.ApplyDamage(damage);
         }
         else
