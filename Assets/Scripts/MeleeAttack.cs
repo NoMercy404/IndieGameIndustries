@@ -5,9 +5,12 @@ public class MeleeAttack : MonoBehaviour
 {
     public float damage = 10f;
     private bool isAttacking = false;
-    public float attackDuration = 0.2f; // krótszy czas
-    private Collider2D currentTarget; // ostatni wróg, z którym się stykamy
+    public float attackDuration = 0.2f;
+    private Collider2D currentTarget;
     private PlayerStats playerStats;
+
+    public Animator animator; // <-- Przypisz w Inspectorze
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q) && !isAttacking)
@@ -21,7 +24,10 @@ public class MeleeAttack : MonoBehaviour
         isAttacking = true;
         Debug.Log("Attack started!");
 
-        // Zadaj damage od razu, jeśli wróg już jest w triggerze
+        // Wywołaj trigger animacji ataku mieczem
+        if (animator != null)
+            animator.SetTrigger("Triger"); 
+
         if (currentTarget != null)
         {
             ApplyDamageTo(currentTarget);
@@ -34,14 +40,13 @@ public class MeleeAttack : MonoBehaviour
     {
         yield return new WaitForSeconds(attackDuration);
         isAttacking = false;
-        Debug.Log("Attack duration ended"); 
+        Debug.Log("Attack duration ended");
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
         if (!other.CompareTag("Enemy")) return;
 
-        // zapamiętaj ostatniego wroga, z którym się stykamy
         currentTarget = other;
 
         if (isAttacking)
@@ -61,7 +66,6 @@ public class MeleeAttack : MonoBehaviour
 
     private void ApplyDamageTo(Collider2D target)
     {
-        // Check if PlayerStats exists and update damage value
         if (playerStats != null)
         {
             damage = playerStats.meleeDamage;
