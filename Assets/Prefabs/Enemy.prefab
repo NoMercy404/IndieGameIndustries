@@ -566,7 +566,7 @@ SpriteRenderer:
   m_SortingLayerID: -105541197
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -831905704, guid: 7808bbdce7757dc439787cec76874b25, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8ed6e15610f36481f91f02b7e136d806, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -592,6 +592,9 @@ MonoBehaviour:
   maxHP: 100
   HP: {fileID: 430055326688536576}
   EnemyTag: {fileID: 2777036847469047284}
+  attackDamage: 10
+  attackRange: 1
+  attackCooldown: 1
 --- !u!50 &4628287050338213827
 Rigidbody2D:
   serializedVersion: 4
@@ -655,7 +658,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -679,13 +682,14 @@ MonoBehaviour:
   player: {fileID: 0}
   moveSpeed: 1
   knockbackForce: 10
-  enemyRepelForce: 5
+  enemyRepelForce: -0.23
   solidObjectsLayer:
     serializedVersion: 2
     m_Bits: 64
   obstacleDetectionDistance: 1
   pathUpdateInterval: 1
   maxPathfindingAttempts: 100
+  attackRange: 1
 --- !u!1 &8193754888574593229
 GameObject:
   m_ObjectHideFlags: 0
