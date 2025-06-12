@@ -13271,7 +13271,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.42261827, w: 0.9063079}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1593997623}
@@ -13461,11 +13461,11 @@ GameObject:
   - component: {fileID: 1593997624}
   - component: {fileID: 1593997626}
   - component: {fileID: 1593997625}
-  - component: {fileID: 1593997627}
   - component: {fileID: 1593997628}
   - component: {fileID: 1593997629}
   - component: {fileID: 1593997630}
   - component: {fileID: 1593997631}
+  - component: {fileID: 1593997632}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -13631,22 +13631,10 @@ BoxCollider2D:
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 1
-  m_AutoTiling: 0
+  m_AutoTiling: 1
   serializedVersion: 2
   m_Size: {x: 0.6655865, y: 1.3164928}
   m_EdgeRadius: 0
---- !u!114 &1593997627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593997620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae776ae4193df4752a99061629e11f69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1593997628
 Animator:
   serializedVersion: 5
@@ -13695,7 +13683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1000
-  meleeDamage: 10
+  meleeDamage: 100
   healthSlider: {fileID: 844021576}
   healthText: {fileID: 0}
 --- !u!114 &1593997631
@@ -13711,6 +13699,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenu: {fileID: 1999191654}
+--- !u!114 &1593997632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593997620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1587dd1f24c01b141aa3222b84f0959e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  switchWeaponKey: 9
 --- !u!1 &1618100144
 GameObject:
   m_ObjectHideFlags: 0
@@ -14452,7 +14453,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1999191655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14715,18 +14716,44 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3428761632795700238, guid: 4d0da00c9107ec84483d0f631df134ea,
         type: 3}
+      propertyPath: offset
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428761632795700238, guid: 4d0da00c9107ec84483d0f631df134ea,
+        type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3428761632795700238, guid: 4d0da00c9107ec84483d0f631df134ea,
+        type: 3}
       propertyPath: shotPoint
       value: 
       objectReference: {fileID: 1593997623}
+    - target: {fileID: 3428761632795700238, guid: 4d0da00c9107ec84483d0f631df134ea,
+        type: 3}
+      propertyPath: arrowPrefab
+      value: 
+      objectReference: {fileID: 923892062619356671, guid: cb9ae7d525fde954caf997fd8ec6d2b2,
+        type: 3}
+    - target: {fileID: 3428761632795700238, guid: 4d0da00c9107ec84483d0f631df134ea,
+        type: 3}
+      propertyPath: arrowSpawnPoint
+      value: 
+      objectReference: {fileID: 1593997623}
+    - target: {fileID: 3428761632795700238, guid: 4d0da00c9107ec84483d0f631df134ea,
+        type: 3}
+      propertyPath: startTimeBtwShots
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4068221468649670815, guid: 4d0da00c9107ec84483d0f631df134ea,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.200407
+      value: -0.002
       objectReference: {fileID: 0}
     - target: {fileID: 4068221468649670815, guid: 4d0da00c9107ec84483d0f631df134ea,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.6998932
+      value: -3.008
       objectReference: {fileID: 0}
     - target: {fileID: 4068221468649670815, guid: 4d0da00c9107ec84483d0f631df134ea,
         type: 3}
@@ -14772,6 +14799,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: bow
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532830460435371052, guid: 4d0da00c9107ec84483d0f631df134ea,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8532830460435371052, guid: 4d0da00c9107ec84483d0f631df134ea,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -105541197
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

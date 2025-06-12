@@ -46,7 +46,26 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyPrefab != null && playerTransform != null)
         {
+            // Instantiate the enemy
             GameObject enemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+
+            // IMPORTANT: Explicitly set the tag to "Enemy"
+            enemy.tag = "Enemy";
+
+            // Debug log to verify the tag is set
+            Debug.Log("Spawned enemy with tag: " + enemy.tag);
+
+            // Make sure the enemy has the Enemy component
+            Enemy enemyComponent = enemy.GetComponent<Enemy>();
+            if (enemyComponent == null)
+            {
+                enemyComponent = enemy.AddComponent<Enemy>();
+                Debug.Log("Added Enemy component to spawned enemy");
+            }
+            else
+            {
+                Debug.Log("Enemy already has Enemy component");
+            }
 
             // Add EnemyMovement component to make the enemy follow the player
             EnemyMovement movement = enemy.GetComponent<EnemyMovement>();
@@ -57,6 +76,24 @@ public class EnemySpawner : MonoBehaviour
 
             movement.player = playerTransform;
             movement.moveSpeed = moveSpeed;
+
+            // Make sure the enemy has a collider
+            Collider2D collider = enemy.GetComponent<Collider2D>();
+            if (collider == null)
+            {
+                collider = enemy.AddComponent<CircleCollider2D>();
+                Debug.Log("Added CircleCollider2D to spawned enemy");
+            }
+
+            // Make sure the collider is not a trigger
+            collider.isTrigger = false;
+
+            // Make sure the enemy is on the default layer (or whatever layer your projectiles check)
+            enemy.layer = 0; // Default layer
+
+            // Log the final setup
+            Debug.Log("Enemy spawned: Tag=" + enemy.tag + ", Layer=" + LayerMask.LayerToName(enemy.layer) +
+                      ", HasCollider=" + (collider != null) + ", IsTrigger=" + collider.isTrigger);
         }
     }
 }

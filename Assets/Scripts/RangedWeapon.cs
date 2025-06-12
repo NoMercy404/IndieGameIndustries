@@ -4,42 +4,61 @@ using UnityEngine;
 
 public class RangedWeapon : Weapon
 {
-    // Remove the constructor that's causing the error
-    // public RangedWeapon(int damage_min, int damage_max, int range) : base(damage_min, damage_max, range)
-    // {
-    // }
-
     public float offset;
     public GameObject projectile;
-    //public GameObject shotEffect;
     public Transform shotPoint;
     public Animator camAnim;
-    private float timeBtwShots;
-    public float startTimeBtwShots;
 
-    // Start is called before the first frame update
+    // Shooting cooldown
+    private float timeBtwShots;
+    public float startTimeBtwShots = 0.2f;
+
     void Start()
     {
-        // Initialize any values here instead of in constructor
+        // Initialize the shooting cooldown
+        timeBtwShots = 0; // Allow immediate first shot
+
+        // Make sure we have a shot point
+        if (shotPoint == null)
+        {
+            // Create a shot point if none exists
+            GameObject shotPointObj = new GameObject("ShotPoint");
+            shotPointObj.transform.parent = transform;
+            shotPointObj.transform.localPosition = new Vector3(0, 1, 0); // Adjust as needed
+            shotPoint = shotPointObj.transform;
+
+            Debug.LogWarning("No shot point assigned to RangedWeapon. Created one automatically.");
+        }
+
+        // Make sure we have a projectile prefab
+        if (projectile == null)
+        {
+            Debug.LogError("No projectile prefab assigned to RangedWeapon!");
+        }
     }
 
     private void Update()
     {
-        // Handles the weapon rotation
-        var dir = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
-        var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        // Get mouse position in world space
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+
+        // Calculate direction to mouse
+        Vector2 direction = mousePos - transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Rotate weapon to face mouse cursor
         transform.rotation = Quaternion.AngleAxis(angle + offset, Vector3.forward);
-        //Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        //float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;
-        //transform.rotation = Quaternion.Euler(0f, 0f, rotZ + offset);
-        // transform.rotation = Quaternion.Euler(0f, 0f, rotZ);
+
+        // Debug visualization of shooting direction
+        Debug.DrawRay(shotPoint.position, direction.normalized * 2f, Color.red);
+
+        // Handle shooting
         if (timeBtwShots <= 0)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0)) // Left mouse button
             {
-                //Instantiate(shotEffect, shotPoint.position, Quaternion.identity);
-                //camAnim.SetTrigger("shake");
-                Instantiate(projectile, shotPoint.position, transform.rotation);
+                Shoot(direction.normalized);
                 timeBtwShots = startTimeBtwShots;
             }
         }
@@ -49,11 +68,49 @@ public class RangedWeapon : Weapon
         }
     }
 
-    // You can add a public method to initialize the weapon if needed
-    public void InitializeWeapon(int min, int max, int weaponRange)
+    void Shoot(Vector2 direction)
     {
-        damage_min = min;
-        damage_max = max;
-        range = weaponRange;
+        // Check if we have all required components
+        if (projectile == null || shotPoint == null)
+        {
+            Debug.LogError("Missing projectile prefab or shot point!");
+            return;
+        }
+
+        // Instantiate the projectile at the shot point position
+        GameObject newProjectile = Instantiate(projectile, shotPoint.position, Quaternion.identity);
+
+        // Get the projectile component
+        Projectile projectileComponent = newProjectile.GetComponent<Projectile>();
+        if (projectileComponent != null)
+        {
+            // Set the projectile's direction to the mouse cursor
+            projectileComponent.direction = direction;
+
+            // Set damage from the weapon
+            projectileComponent.damage = Random.Range(damage_min, damage_max + 1);
+
+            // Make sure the projectile has a collider that can detect enemies
+            Collider2D collider = newProjectile.GetComponent<Collider2D>();
+            if (collider == null)
+            {
+                collider = newProjectile.AddComponent<BoxCollider2D>();
+                ((BoxCollider2D)collider).size = new Vector2(0.2f, 0.5f);
+                collider.isTrigger = true;
+            }
+        }
+        else
+        {
+            Debug.LogError("Projectile prefab does not have a Projectile component!");
+        }
+
+        // Log for debugging
+        Debug.Log("Projectile fired from " + shotPoint.position + " toward cursor");
+
+        // Apply camera shake if available
+        if (camAnim != null)
+        {
+            camAnim.SetTrigger("shake");
+        }
     }
 }
