@@ -29,29 +29,32 @@ public class WeaponPickup : MonoBehaviour
     }
 
     void PickUpWeapon()
-{
-    GameObject player = GameObject.FindGameObjectWithTag("Player");
-    Transform weaponHolder = player.transform.Find("WeaponHolder");
-
-    if (weaponHolder == null)
     {
-        Debug.LogError("Nie znaleziono WeaponHolder!");
-        return;
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Transform weaponHolder = player.transform.Find("WeaponHolder");
+
+        if (weaponHolder == null)
+        {
+            Debug.LogError("Nie znaleziono WeaponHolder!");
+            return;
+        }
+
+        // Get or add the WeaponManager component
+        WeaponManager weaponManager = player.GetComponent<WeaponManager>();
+        if (weaponManager == null)
+        {
+            weaponManager = player.AddComponent<WeaponManager>();
+        }
+
+        // Resetuj skalê i rotacjê broni
+        transform.SetParent(weaponHolder);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.Euler(0f, 0f, 90f); // Dopasuj do rêki
+        transform.localScale = Vector3.one;
+
+        // Add the weapon to the manager (this will handle visibility)
+        weaponManager.AddWeapon(gameObject);
+
+        Debug.Log("Broñ podniesiona!");
     }
-
-    // UsuÅ„ starÄ… broÅ„
-    foreach (Transform child in weaponHolder)
-    {
-        Destroy(child.gameObject);
-    }
-
-    // Resetuj skalÄ™ i rotacjÄ™ broni
-    transform.SetParent(weaponHolder);
-    transform.localPosition = Vector3.zero;
-    transform.localRotation = Quaternion.Euler(0f, 0f, 90f); // Dopasuj do rÄ™ki
-    transform.localScale = Vector3.one;
-
-    Debug.Log("BroÅ„ podniesiona!");
-}
-
 }

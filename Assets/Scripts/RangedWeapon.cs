@@ -1,21 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class RangedWeapon : Weapon
 {
-    public RangedWeapon(int damage_min, int damage_max, int range) : base(damage_min, damage_max, range)
-    {
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-
-
+    // Remove the constructor that's causing the error
+    // public RangedWeapon(int damage_min, int damage_max, int range) : base(damage_min, damage_max, range)
+    // {
+    // }
 
     public float offset;
     public GameObject projectile;
@@ -24,6 +16,12 @@ public class RangedWeapon : Weapon
     public Animator camAnim;
     private float timeBtwShots;
     public float startTimeBtwShots;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Initialize any values here instead of in constructor
+    }
 
     private void Update()
     {
@@ -49,8 +47,13 @@ public class RangedWeapon : Weapon
         {
             timeBtwShots -= Time.deltaTime;
         }
+    }
 
-
+    // You can add a public method to initialize the weapon if needed
+    public void InitializeWeapon(int min, int max, int weaponRange)
+    {
+        damage_min = min;
+        damage_max = max;
+        range = weaponRange;
     }
 }
-
